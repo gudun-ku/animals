@@ -17,6 +17,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     }
 
     private fun getMockAnimals() {
+        val a0 = Animal("rat")
         val a1 = Animal("alligator")
         val a2 = Animal("bear")
         val a3 = Animal("rabbit")
@@ -33,7 +34,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
         val aE = Animal("goat")
         val aF = Animal("mustang")
 
-        val animalList = arrayListOf(a1, a2, a3, a4, a5, a6, a7, a8, a9, aA, aB, aC, aD, aE, aF)
+        val animalList = arrayListOf(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, aA, aB, aC, aD, aE, aF)
 
         animals.value = animalList
         loadError.value = false
