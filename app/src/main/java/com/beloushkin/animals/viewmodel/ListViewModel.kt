@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.beloushkin.animals.model.Animal
 import com.beloushkin.animals.model.AnimalApiService
 import com.beloushkin.animals.model.ApiKey
+import com.beloushkin.animals.util.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -20,9 +21,22 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     private val disposable = CompositeDisposable()
     private val apiService = AnimalApiService()
 
+    private val prefs = SharedPreferencesHelper(getApplication())
+
+    private var invalidApiKey = false
+
     fun refresh() {
-        // Mock data
-        // getMockAnimals()
+        isLoading.value = true
+        invalidApiKey = false
+        val key = prefs.getApiKey()
+        if(key.isNullOrEmpty()) {
+            getKey()
+        } else {
+            getAnimals(key)
+        }
+    }
+
+    fun hardRefresh() {
         isLoading.value = true
         getKey()
     }
@@ -38,6 +52,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
                             loadError.value = true
                             isLoading.value =false
                         } else {
+                            prefs.saveApiKey(key.key)
                             getAnimals(key.key)
                         }
                     }
@@ -64,6 +79,10 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
                     }
 
                     override fun onError(e: Throwable) {
+                        if(!invalidApiKey) {
+                            invalidApiKey = true
+                            getKey()
+                        }
                         e.printStackTrace()
                         isLoading.value = false
                         animals.value = null

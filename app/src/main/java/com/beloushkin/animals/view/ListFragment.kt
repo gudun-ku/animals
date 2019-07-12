@@ -68,7 +68,7 @@ class ListFragment : Fragment() {
 
             GlobalScope.launch(Dispatchers.Main) {
                 refreshLayout.isRefreshing = false
-                delay(2000)
+                delay(500)
                 viewModel.refresh()
             }
 

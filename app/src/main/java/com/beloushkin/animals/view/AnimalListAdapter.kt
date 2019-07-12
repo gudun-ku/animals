@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.beloushkin.animals.R
 import com.beloushkin.animals.model.Animal
+import com.beloushkin.animals.util.getProgressDrawable
+import com.beloushkin.animals.util.loadNetworkImage
 import kotlinx.android.synthetic.main.item_animal.view.*
 
 class AnimalListAdapter(
@@ -29,6 +31,8 @@ class AnimalListAdapter(
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
         holder.view.animalName.text = animalList[position].name
+        holder.view.animalImage.loadNetworkImage(animalList[position].imageUrl,
+            getProgressDrawable(holder.view.context))
 
     }
 
