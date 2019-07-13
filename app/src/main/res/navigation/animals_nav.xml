@@ -24,5 +24,8 @@
                 android:id="@+id/actionList"
                 app:destination="@id/listFragment"
                 app:exitAnim="@anim/nav_default_exit_anim"/>
+        <argument
+                android:name="Animal"
+                app:argType="com.beloushkin.animals.model.Animal"/>
     </fragment>
 </navigation>

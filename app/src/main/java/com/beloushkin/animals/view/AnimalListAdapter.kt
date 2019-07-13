@@ -3,6 +3,7 @@ package com.beloushkin.animals.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.beloushkin.animals.R
 import com.beloushkin.animals.model.Animal
@@ -30,10 +31,14 @@ class AnimalListAdapter(
     override fun getItemCount() = animalList.size
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
-        holder.view.animalName.text = animalList[position].name
+        val currentAnimal = animalList[position]
+        holder.view.animalName.text = currentAnimal.name
         holder.view.animalImage.loadNetworkImage(animalList[position].imageUrl,
             getProgressDrawable(holder.view.context))
-
+        holder.view.animalLayout.setOnClickListener {
+            val action = ListFragmentDirections.actionDetail(currentAnimal)
+            Navigation.findNavController(holder.view).navigate(action)
+        }
     }
 
     class AnimalViewHolder(var view: View):RecyclerView.ViewHolder(view)
