@@ -15,6 +15,7 @@ import androidx.palette.graphics.Palette
 import com.beloushkin.animals.R
 import com.beloushkin.animals.databinding.FragmentDetailBinding
 import com.beloushkin.animals.model.Animal
+import com.beloushkin.animals.model.AnimalPalette
 import com.beloushkin.animals.util.getProgressDrawable
 import com.beloushkin.animals.util.loadNetworkImage
 import com.bumptech.glide.Glide
@@ -46,6 +47,7 @@ class DetailFragment : Fragment() {
 
             dataBinding.animal = animal
 
+
         }
     }
 
@@ -59,10 +61,9 @@ class DetailFragment : Fragment() {
 
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     Palette.from(resource)
-                        .generate {palette ->
+                        .generate { palette ->
                             val intColor = palette?.lightMutedSwatch?.rgb ?: 0
-                            dataBinding.animalLayout.setBackgroundColor(intColor)
-
+                            dataBinding.palette = AnimalPalette(intColor)
                         }
                 }
             })
